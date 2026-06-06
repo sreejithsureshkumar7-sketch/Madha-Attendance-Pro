@@ -1,7 +1,29 @@
 function teacherGuard(){const u=prompt("Teacher Username");const p=prompt("Teacher Password");if(u!=="teacher"||p!=="teacher123"){alert("Wrong teacher login");location.href="index.html";}}
 function classRepGuard(){const u=prompt("Class Rep Username");const p=prompt("Class Rep Password");if(u!=="cr"||p!=="cr123"){alert("Wrong class rep login");location.href="index.html";}}
 function setToday(){const d=document.getElementById("attendanceDate");if(d)d.valueAsDate=new Date();}
-async function registerStudent(){const s={name:document.getElementById("name").value.trim(),regno:document.getElementById("regno").value.trim(),department:document.getElementById("department").value.trim(),year:document.getElementById("year").value.trim(),email:document.getElementById("email").value.trim(),phone:document.getElementById("phone").value.trim(),createdAt:new Date().toISOString()};if(!s.name||!s.regno||!s.department||!s.year){alert("Name, Register Number, Department, Year required");return;}await db.collection("students").doc(s.regno).set(s);alert("Student details saved successfully!");document.querySelectorAll("input").forEach(i=>i.value="");document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);}
+async function registerStudent(){
+const s={
+name:document.getElementById("name").value.trim(),
+regno:document.getElementById("regno").value.trim(),
+department:document.getElementById("department").value.trim(),
+year:document.getElementById("year").value.trim(),
+email:document.getElementById("email").value.trim(),
+phone:document.getElementById("phone").value.trim(),
+createdAt:new Date().toISOString()
+};
+
+if(!s.name ⠟⠺⠵⠵⠞⠵⠵⠞⠺⠺ !s.department || !s.year){
+alert("Name, Register Number, Department, Year required");
+return;
+}
+
+await db.collection("students").doc(s.regno).set(s);
+
+alert("Student details saved successfully!");
+
+document.querySelectorAll("input").forEach(i=>i.value="");
+document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
+}
 function getFilters(){return{department:document.getElementById("filterDepartment")?.value||"",year:document.getElementById("filterYear")?.value||"",search:(document.getElementById("searchBox")?.value||"").toLowerCase()};}
 async function loadStudents(){const tbody=document.getElementById("studentsTable");if(!tbody)return;const f=getFilters();tbody.innerHTML="";const snap=await db.collection("students").get();snap.forEach(doc=>{const s=doc.data();const text=`${s.name} ${s.regno}`.toLowerCase();if((!f.department||s.department===f.department)&&(!f.year||s.year===f.year)&&text.includes(f.search)){tbody.innerHTML+=`<tr><td>${s.name||""}</td><td>${s.regno||""}</td><td>${s.department||""}</td><td>${s.year||""}</td><td>${s.email||""}</td><td>${s.phone||""}</td></tr>`;}});}
 async function loadAttendanceStudents(){const tbody=document.getElementById("attendanceStudents");if(!tbody)return;const dept=document.getElementById("attendanceDepartment").value;const year=document.getElementById("attendanceYear").value;tbody.innerHTML="";if(!dept||!year){tbody.innerHTML=`<tr><td colspan="6">Please select department and year</td></tr>`;return;}const snap=await db.collection("students").get();let count=0;snap.forEach(doc=>{const s=doc.data();if(s.department===dept&&s.year===year){count++;tbody.innerHTML+=`<tr data-name="${s.name}" data-regno="${s.regno}" data-department="${s.department}" data-year="${s.year}"><td>${s.name}</td><td>${s.regno}</td><td>${s.department}</td><td>${s.year}</td><td><input type="radio" class="present" name="${s.regno}" value="Present"></td><td><input type="radio" class="absent" name="${s.regno}" value="Absent"></td></tr>`;}});if(count===0)tbody.innerHTML=`<tr><td colspan="6">No students found for this department and year</td></tr>`;}
