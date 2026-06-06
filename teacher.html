@@ -8,7 +8,7 @@
 <select id="filterYear" onchange="loadStudents();loadAttendanceReport();"><option value="">All Years</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option></select>
 <input id="searchBox" placeholder="Search name or register no" onkeyup="loadStudents()"></div></section>
 <section class="card"><h2>Students List</h2><div class="table-wrap"><table><thead><tr><th>Name</th><th>Reg No</th><th>Department</th><th>Year</th><th>Email</th><th>Phone</th></tr></thead><tbody id="studentsTable"></tbody></table></div></section>
-<section class="card"><h2>Attendance Report</h2><button oneclick="downloadPDF()">DownloadPDF</button><div class="stats"><span>Present: <b id="presentCount">0</b></span><span>Absent: <b id="absentCount">0</b></span><span>Total: <b id="totalCount">0</b></span><span>Percentage :<b  id="attendancePercentage">0%</b></span></div>
+<section class="card"><h2>Attendance Report</h2><button oneclick="downloadPDF()">DownloadPDF</button><button oneclick="downloadExcel()">Download Excel</button><div class="stats"><span>Present: <b id="presentCount">0</b></span><span>Absent: <b id="absentCount">0</b></span><span>Total: <b id="totalCount">0</b></span><span>Percentage :<b  id="attendancePercentage">0%</b></span></div>
 <div class="table-wrap"><table><thead><tr><th>Date</th><th>Name</th><th>Reg No</th><th>Department</th><th>Year</th><th>Status</th><th>Marked By</th></tr></thead><tbody id="attendanceReport"></tbody></table></div></section></main><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
